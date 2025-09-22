@@ -1,5 +1,33 @@
 import mongoose from "mongoose";
 
+const profileSchema = new mongoose.Schema({
+    
+    firstName: {
+        type: String,
+        minlength: 2, maxlength: 50,
+        required: true
+    },
+    lastName: {
+        type: String,
+        minlength: 2, maxlength: 50,
+        required: true
+    },
+    biography: {
+        type: String,
+        maxlength: 500,
+        required: false,
+    },
+    avatarUrl: {
+        type: String,
+        match: [/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i],
+        required: false,
+    },
+    birthDate: {
+        type: Date,
+        required: false,
+    }
+},{_id: false})
+
 const userSchema = new mongoose.Schema({
     username: { type: String,
         minlength: 2, maxlength: 20,
@@ -22,33 +50,7 @@ const userSchema = new mongoose.Schema({
         default: 'user',
         required: true,
      },
-     profile: {
-        firstName: {
-            type: String,
-            minlength: 2, maxlength: 50,
-            required: true
-        },
-        lastName: {
-            type: String,
-            minlength: 2, maxlength: 50,
-            required: true
-        },
-        biography: {
-            type: String,
-            maxlength: 500,
-            required: false,
-        },
-        avatarUrl: {
-            type: String,
-            match: [/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i],
-            required: false,
-        },
-        birthDate: {
-            type: Date,
-            required: false,
-        }
-     },
-
+     profile: profileSchema,
 },{
     versionKey: false,
     timestamps: true

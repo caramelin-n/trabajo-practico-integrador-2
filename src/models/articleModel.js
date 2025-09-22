@@ -21,8 +21,13 @@ const articleSchema = new mongoose.Schema({
         enum: ['published', 'archived'],
         default: 'published',
     },
-    author: {},
-    tags: {},
+    author: {
+        type: mongoose.Schema.Types.ObjectId, ref: "User",
+        required: true,
+     },
+    tags: [{
+        type: mongoose.Schema.Types.ObjectId, ref: "Tags"
+    }],
 },{
     timestamps: true,
 });

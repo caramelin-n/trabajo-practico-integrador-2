@@ -13,13 +13,15 @@ import { verifyToken } from "../helpers/jwt.helper.js";
 
 export const createArticle = async (req, res) => {
     try {
-        const { title, content, excerpt, status, author, tags } = req.body;
+        const token = req.cookies.token;
+        const decoded = await verifyToken(token);
+        const { title, content, excerpt, status, tags } = req.body;
         const article = await articleModel.create({
             title,
             content,
             excerpt,
             status,
-            author,
+            author: decoded.id,
             tags
         });
         return res.status(201).json({

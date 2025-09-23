@@ -30,6 +30,7 @@ const articleSchema = new mongoose.Schema({
     }],
 },{
     timestamps: true,
+    versionKey: false,
 });
 
 export const articleModel = mongoose.model("Article", articleSchema);

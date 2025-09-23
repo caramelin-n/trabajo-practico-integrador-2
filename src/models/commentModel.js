@@ -14,6 +14,7 @@ const commentSchema = new mongoose.Schema({
     },
 },{
     timestamps: true,
+    versionKey: false,
 })
 
 export const commentModel = mongoose.model("Comment", commentSchema);

@@ -42,7 +42,7 @@ export const getAllArticles = async (req, res) => {
         const article = await articleModel.find().populate({
             path: "author",
             select: "-password -deletedAt"
-        });
+        }).populate("tags");
         return res.status(200).json({
             ok: true,
             data: article
@@ -60,7 +60,7 @@ export const getArticleById = async (req, res) => {
         const article = await articleModel.findById(req.params.id).populate({
             path: "author",
             select: "-password -deletedAt"
-        });
+        }).populate("tags");
         return res.status(200).json({
             ok: true,
             data: article
@@ -78,7 +78,7 @@ export const getArticleUser = async (req, res) => {
         const token = req.cookies.token;
         const decoded = await verifyToken(token);
         const id = decoded.id;
-        const articles = await articleModel.find({ author: id });
+        const articles = await articleModel.find({ author: id }).populate("tags");
         return res.status(200).json({
             ok: true,
             data: articles
@@ -110,7 +110,10 @@ export const updateArticle = async (req, res) => {
             author: author || article.author,
             tags: tags || article.tags
         });
-        const articUp = await articleModel.findById(req.params.id);
+        const articUp = await articleModel.findById(req.params.id).populate({
+            path: "author",
+            select: "-password -deletedAt"
+        }).populate("tags");
         return res.status(200).json({
             ok: true,
             msg: "Artículo actualizado correctamente.",

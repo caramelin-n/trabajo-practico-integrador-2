@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 //required agregados en cada campo para mejor interpretación.
 
-const tagSchema = mongoose.Schema({
+const tagSchema = new mongoose.Schema({
     name: {
         type: String,
         unique: true,
@@ -19,4 +19,4 @@ const tagSchema = mongoose.Schema({
     versionKey: false
 })
 
-export const tagModel = mongoose.model("Tag", tagSchema);
+export const tagModel = mongoose.model("Tags", tagSchema);

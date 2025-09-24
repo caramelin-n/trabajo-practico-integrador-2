@@ -1,5 +1,4 @@
 import { verifyToken } from "../helpers/jwt.helper.js";
-import { articleModel } from "../models/articleModel.js";
 import { commentModel } from "../models/commentModel.js";
 
 // ● POST /api/comments → Crear comentario en artículo. (usuario autenticado)
@@ -36,7 +35,7 @@ export const updateComment = async (req, res) => {
             author: author || comment.author,
             article: article || comment.article
         });
-        const commentUp = await commentModel.findById(req.params.id);
+        const commentUp = await commentModel.findById(req.params.id)
         return res.status(200).json({
             ok: true,
             msg: "Comentario actualizado correctamente.",

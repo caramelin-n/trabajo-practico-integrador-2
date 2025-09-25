@@ -53,7 +53,7 @@ export const paramValidator = [
     .custom(async (value) => {
         const tag = await tagModel.findByPk(value);
         if(!tag){
-            throw new Error("El artículo no existe en la base de datos.")
+            throw new Error("No existe en la base de datos.")
         }
     })
 ]

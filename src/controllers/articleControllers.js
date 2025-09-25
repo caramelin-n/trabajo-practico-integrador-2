@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { articleModel } from "../models/articleModel.js";
 import { verifyToken } from "../helpers/jwt.helper.js";
+import { commentModel } from "../models/commentModel.js";
 
 // ● POST /api/articles → Crear artículo. (usuario autenticado)
 // ● GET /api/articles → Listar artículos publicados con populate de author y tags.
@@ -129,14 +130,20 @@ export const updateArticle = async (req, res) => {
 }
 export const deleteArticle = async (req, res) => {
     try {
-        const article = await articleModel.findById(req.params.id);
+        const article = await articleModel.findByIdAndDelete(req.params.id);
+        await commentModel.deleteMany({
+            article: article._id
+        });
         if(!article){
             return res.status(404).json({
                 ok: false,
                 msg: "Artículo no encontrado."
             });
         }
-        await article.deleteOne();
+        return res.status(200).json({
+            ok: true,
+            msg: "Artículo eliminado correctamente con sus comentarios.",
+        });
     } catch (error) {
         console.error(chalk.redBright(error));
         res.status(500).json({

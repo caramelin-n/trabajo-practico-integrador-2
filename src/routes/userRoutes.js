@@ -4,13 +4,12 @@ import admin from "../middlewares/adminMiddleware.js";
 import auth from "../middlewares/authMiddleware.js";
 import { bodyUserValidator } from "../middlewares/validators/userValidator.js";
 import validator from "../middlewares/validator.js"
-import { paramValidator } from "../middlewares/validators/articleValidator.js";
 
 const userRouter = Router();
 
 userRouter.get("/users", admin, auth, getAllUsers);
-userRouter.get("/users/:id", admin, auth, paramValidator, validator, getUserById);
-userRouter.put("/users/:id", admin, auth, bodyUserValidator, paramValidator, validator, updateUser);
-userRouter.delete("/users/:id", admin, auth, paramValidator, validator, deleteUser);
+userRouter.get("/users/:id", admin, auth, validator, getUserById);
+userRouter.put("/users/:id", admin, auth, bodyUserValidator, validator, updateUser);
+userRouter.delete("/users/:id", admin, auth, validator, deleteUser);
 
 export default userRouter;

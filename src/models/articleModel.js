@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { commentModel } from "./commentModel.js";
 
 const articleSchema = new mongoose.Schema({
     title: {

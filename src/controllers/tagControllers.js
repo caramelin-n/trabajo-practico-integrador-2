@@ -1,3 +1,4 @@
+import { articleModel } from "../models/articleModel.js";
 import { tagModel } from "../models/tagModel.js";
 import chalk from "chalk";
 
@@ -10,7 +11,12 @@ import chalk from "chalk";
 
 export const deleteTag = async (req, res) => {
     try {
-        await tagModel.findByIdAndDelete(req.params.id);
+        const article = await articleModel.findById(req.params.id);
+        const { tagId } = req.params;
+        await tagModel.findByIdAndDelete(req.params.tagId);
+        await article.updateOne({
+            $pull: { tags: tagId }
+        })
         return res.status(200).json({
             ok: true,
             msg: "Etiqueta borrada correctamente."
